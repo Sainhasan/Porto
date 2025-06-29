@@ -1,55 +1,37 @@
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 700);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow z-50 px-4 py-3 flex justify-center flex-wrap gap-4 text-sm sm:text-base">
-      <Link
-        to="home"
-        smooth={true}
-        duration={100}
-        spy={true}
-        activeClass="underline"
-        className="cursor-pointer text-gray-700 hover:text-blue-600"
-      >
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 px-4 py-3 flex justify-center flex-wrap items-center gap-3 sm:gap-6 text-sm sm:text-base ${
+        scrolled ? "bg-white shadow-md" : "bg-transparent"
+      }`}
+    >
+      <Link to="/" className="cursor-pointer text-gray-700 hover:text-blue-600">
         Home
       </Link>
-      <Link
-        to="about"
-        smooth={true}
-        spy={true}
-        duration={100}
-        activeClass="underline"
-        className="cursor-pointer text-gray-700 hover:text-blue-600"
-      >
+      <Link to="/about" className="cursor-pointer text-gray-700 hover:text-blue-600">
         About
       </Link>
-      <Link
-        to="skills"
-        smooth={true}
-        spy={true}
-        duration={100}
-        activeClass="underline"
-        className="cursor-pointer text-gray-700 hover:text-blue-600"
-      >
+      <Link to="/skills" className="cursor-pointer text-gray-700 hover:text-blue-600">
         Skills
       </Link>
-      <Link
-        to="projects"
-        smooth={true}
-        spy={true}
-        duration={100}
-        activeClass="underline"
-        className="cursor-pointer text-gray-700 hover:text-blue-600"
-      >
+      <Link to="/projects" className="cursor-pointer text-gray-700 hover:text-blue-600">
         Project
       </Link>
-      <Link
-        to="contact"
-        smooth={true}
-        spy={true}
-        duration={100}
-        activeClass="underline"
-        className="cursor-pointer text-gray-700 hover:text-blue-600"
-      >
+      <Link to="/contact" className="cursor-pointer text-gray-700 hover:text-blue-600">
         Contact
       </Link>
     </nav>

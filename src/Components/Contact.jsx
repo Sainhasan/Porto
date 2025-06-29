@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 function Contact() {
   const [form, setForm] = useState({
@@ -7,6 +8,8 @@ function Contact() {
     email: "",
     pesan: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const isFormValid = form.nama && form.email && form.pesan;
 
@@ -16,15 +19,22 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+
     console.log("Form submitted:", form);
-    setForm({
-      nama: "",
-      email: "",
-      pesan: "",
-    });
     setTimeout(() => {
-      window.location.reload();
-    }, 300);
+      setForm({
+        nama: "",
+        email: "",
+        pesan: "",
+      });
+
+      toast.success("Pesan berhasil dikirim!", {
+        autoClose: 2000,
+      });
+
+      setLoading(false);
+    }, 1000);
   };
 
   return (
@@ -36,7 +46,9 @@ function Contact() {
       transition={{ duration: 1 }}
       viewport={{ once: true }}
     >
-      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Hubungi Saya</h2>
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        Hubungi Saya
+      </h2>
       <p className="text-gray-600 mb-6 text-center">
         Ingin bekerja sama atau ngobrol? Hubungi saya lewat sosial media:
       </p>
@@ -72,7 +84,7 @@ function Contact() {
               name="nama"
               value={form.nama}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-base"
               placeholder="Masukkan nama Anda"
             />
           </div>
@@ -85,7 +97,7 @@ function Contact() {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-base"
               placeholder="Masukkan email Anda"
             />
           </div>
@@ -98,8 +110,8 @@ function Contact() {
               value={form.pesan}
               onChange={handleChange}
               rows="4"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Tulis pesan Anda di sini..."
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-base"
+              placeholder="Tulis pesan Anda di sini"
             ></textarea>
           </div>
           <button
@@ -111,7 +123,14 @@ function Contact() {
                 : "bg-gray-300 text-gray-600 cursor-not-allowed"
             }`}
           >
-            Kirim
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="spinner" />
+                <span>Mengirim...</span>
+              </span>
+            ) : (
+              "Kirim"
+            )}
           </button>
         </form>
       </motion.div>
