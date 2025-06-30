@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
+      className="h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
     >
       <h1 className="text-3xl md:text-4xl font-bold text-blue-600 mb-4">
         Halo Saya Hasan
